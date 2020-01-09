@@ -130,10 +130,8 @@
 #!                                Default: 'UTF-8'
 #!                                Optional
 #!
-#! @output return_result: If successful, returns the complete API response. In case of an error this output will contain
-#!                        the error message.
-#! @output exception: An error message in case there was an error while executing the request.
-#! @output status_code: The HTTP status code for Terraform API request.
+#! @output hosted_state_url: A url from which you can download the raw state.
+#! @output state_version_id: The ID of the desired state version.
 #!
 #! @result SUCCESS: The request was successfully executed.
 #! @result FAILURE: There was an error while executing the request.
