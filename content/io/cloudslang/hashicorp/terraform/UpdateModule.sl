@@ -165,6 +165,9 @@ flow:
             - trust_all_roots: '${trust_all_roots}'
             - x_509_hostname_verifier: '${x_509_hostname_verifier}'
             - trust_keystore: '${trust_keystore}'
+            - trust_password:
+                value: '${trust_password}'
+                sensitive: true
             - connect_timeout: '${connect_timeout}'
             - socket_timeout: '${socket_timeout}'
             - keep_alive: '${keep_alive}'
@@ -178,23 +181,22 @@ flow:
         do:
           io.cloudslang.hashicorp.terraform.workspaces.get_workspace_details:
             - auth_token:
-               value: '${auth_token}'
-               sensitive: true
+                value: '${auth_token}'
+                sensitive: true
             - organization_name: '${organization_name}'
             - workspace_name: '${workspace_name}'
-            - variables_json: '${variables_json}'
-            - sensitive_variables_json:
-                value: '${sensitive_variables_json}'
-                sensitive: true
             - proxy_host: '${proxy_host}'
             - proxy_port: '${proxy_port}'
             - proxy_username: '${proxy_username}'
             - proxy_password:
-                 value: '${proxy_password}'
-                 sensitive: true
+                value: '${proxy_password}'
+                sensitive: true
             - trust_all_roots: '${trust_all_roots}'
             - x_509_hostname_verifier: '${x_509_hostname_verifier}'
             - trust_keystore: '${trust_keystore}'
+            - trust_password:
+                value: '${trust_password}'
+                sensitive: true
             - connect_timeout: '${connect_timeout}'
             - socket_timeout: '${socket_timeout}'
             - keep_alive: '${keep_alive}'
@@ -203,8 +205,9 @@ flow:
             - response_character_set: '${response_character_set}'
         publish:
           - workspace_id
+          - return_result
         navigate:
-          - SUCCESS: create_run
+          - SUCCESS: get_auto_apply_value
           - FAILURE: on_failure
     - create_run:
         do:
@@ -215,7 +218,6 @@ flow:
             - workspace_id: '${workspace_id}'
             - run_message: '${run_message}'
             - is_destroy: '${is_destroy}'
-            - request_body: null
             - proxy_host: '${proxy_host}'
             - proxy_port: '${proxy_port}'
             - proxy_username: '${proxy_username}'
@@ -243,9 +245,47 @@ flow:
         do:
           io.cloudslang.base.utils.is_true:
             - bool_value: '${auto_apply}'
+        publish: []
         navigate:
           - 'TRUE': wait_for_apply_state
           - 'FALSE': wait_for_plan_status
+    - wait_for_plan_status:
+        do:
+          io.cloudslang.base.utils.sleep:
+            - seconds: '240'
+        navigate:
+          - SUCCESS: get_run_details
+          - FAILURE: on_failure
+    - get_run_details:
+        do:
+          io.cloudslang.hashicorp.terraform.runs.get_run_details:
+            - auth_token:
+                value: '${auth_token}'
+                sensitive: true
+            - run_id: '${run_id}'
+            - proxy_host: '${proxy_host}'
+            - proxy_port: '${proxy_port}'
+            - proxy_username: '${proxy_username}'
+            - proxy_password:
+                value: '${proxy_password}'
+                sensitive: true
+            - trust_all_roots: '${trust_all_roots}'
+            - x_509_hostname_verifier: '${x_509_hostname_verifier}'
+            - trust_keystore: '${trust_keystore}'
+            - trust_password:
+                value: '${trust_password}'
+                sensitive: true
+            - connect_timeout: '${connect_timeout}'
+            - socket_timeout: '${socket_timeout}'
+            - keep_alive: '${keep_alive}'
+            - connections_max_per_route: '${connections_max_per_route}'
+            - connections_max_total: '${connections_max_total}'
+            - response_character_set: '${response_character_set}'
+        publish:
+          - return_result
+        navigate:
+          - SUCCESS: get_run_status_value
+          - FAILURE: on_failure
     - get_run_status_value:
         do:
           io.cloudslang.base.json.get_value:
@@ -295,12 +335,12 @@ flow:
         navigate:
           - SUCCESS: wait_for_apply_state
           - FAILURE: on_failure
-    - wait_for_plan_status:
+    - wait_for_apply_state:
         do:
           io.cloudslang.base.utils.sleep:
             - seconds: '240'
         navigate:
-          - SUCCESS: get_run_details
+          - SUCCESS: get_current_state_version
           - FAILURE: on_failure
     - get_current_state_version:
         do:
@@ -333,45 +373,18 @@ flow:
         navigate:
           - SUCCESS: SUCCESS
           - FAILURE: on_failure
-    - wait_for_apply_state:
+    - get_auto_apply_value:
         do:
-          io.cloudslang.base.utils.sleep:
-            - seconds: '240'
-        navigate:
-          - SUCCESS: get_current_state_version
-          - FAILURE: on_failure
-    - get_run_details:
-        do:
-          io.cloudslang.hashicorp.terraform.runs.get_run_details:
-            - auth_token:
-                value: '${auth_token}'
-                sensitive: true
-            - run_id: '${run_id}'
-            - proxy_host: '${proxy_host}'
-            - proxy_port: '${proxy_port}'
-            - proxy_username: '${proxy_username}'
-            - proxy_password:
-                value: '${proxy_password}'
-                sensitive: true
-            - trust_all_roots: '${trust_all_roots}'
-            - x_509_hostname_verifier: '${x_509_hostname_verifier}'
-            - trust_keystore: '${trust_keystore}'
-            - trust_password:
-                value: '${trust_password}'
-                sensitive: true
-            - connect_timeout: '${connect_timeout}'
-            - socket_timeout: '${socket_timeout}'
-            - keep_alive: '${keep_alive}'
-            - connections_max_per_route: '${connections_max_per_route}'
-            - connections_max_total: '${connections_max_total}'
-            - response_character_set: '${response_character_set}'
+          io.cloudslang.base.json.get_value:
+            - json_input: '${return_result}'
+            - json_path: 'data,attributes,auto-apply'
         publish:
-          - return_result
+          - auto_apply: '${return_result}'
         navigate:
-          - SUCCESS: get_run_status_value
+          - SUCCESS: create_run
           - FAILURE: on_failure
   outputs:
-    - hosted_state_url: '${hosted_state_download_url}'
+    - hosted_state_download_url: '${hosted_state_download_url}'
     - state_version_id: '${state_version_id}'
   results:
     - FAILURE

@@ -69,133 +69,133 @@
 
 namespace: io.cloudslang.hashicorp.terraform.runs
 
-operation: 
+operation:
   name: cancel_run
-  
-  inputs: 
-    - auth_token:    
+
+  inputs:
+    - auth_token:
         sensitive: true
-    - authToken: 
-        default: ${get('auth_token', '')}  
-        required: false 
-        private: true 
+    - authToken:
+        default: ${get('auth_token', '')}
+        required: false
+        private: true
         sensitive: true
-    - run_id    
-    - runId: 
-        default: ${get('run_id', '')}  
-        required: false 
-        private: true 
-    - run_comment:  
-        required: false  
-    - runComment: 
-        default: ${get('run_comment', '')}  
-        required: false 
-        private: true 
-    - request_body:  
-        required: false  
-    - requestBody: 
-        default: ${get('request_body', '')}  
-        required: false 
-        private: true 
-    - proxy_host:  
-        required: false  
-    - proxyHost: 
-        default: ${get('proxy_host', '')}  
-        required: false 
-        private: true 
-    - proxy_port:  
-        required: false  
-    - proxyPort: 
-        default: ${get('proxy_port', '')}  
-        required: false 
-        private: true 
-    - proxy_username:  
-        required: false  
-    - proxyUsername: 
-        default: ${get('proxy_username', '')}  
-        required: false 
-        private: true 
-    - proxy_password:  
-        required: false  
+    - run_id
+    - runId:
+        default: ${get('run_id', '')}
+        required: false
+        private: true
+    - run_comment:
+        required: false
+    - runComment:
+        default: ${get('run_comment', '')}
+        required: false
+        private: true
+    - request_body:
+        required: false
+    - requestBody:
+        default: ${get('request_body', '')}
+        required: false
+        private: true
+    - proxy_host:
+        required: false
+    - proxyHost:
+        default: ${get('proxy_host', '')}
+        required: false
+        private: true
+    - proxy_port:
+        required: false
+    - proxyPort:
+        default: ${get('proxy_port', '')}
+        required: false
+        private: true
+    - proxy_username:
+        required: false
+    - proxyUsername:
+        default: ${get('proxy_username', '')}
+        required: false
+        private: true
+    - proxy_password:
+        required: false
         sensitive: true
-    - proxyPassword: 
-        default: ${get('proxy_password', '')}  
-        required: false 
-        private: true 
+    - proxyPassword:
+        default: ${get('proxy_password', '')}
+        required: false
+        private: true
         sensitive: true
-    - trust_all_roots:  
-        required: false  
-    - trustAllRoots: 
-        default: ${get('trust_all_roots', '')}  
-        required: false 
-        private: true 
-    - x_509_hostname_verifier:  
-        required: false  
-    - x509HostnameVerifier: 
-        default: ${get('x_509_hostname_verifier', '')}  
-        required: false 
-        private: true 
-    - trust_keystore:  
-        required: false  
-    - trustKeystore: 
-        default: ${get('trust_keystore', '')}  
-        required: false 
-        private: true 
-    - trust_password:  
-        required: false  
+    - trust_all_roots:
+        required: false
+    - trustAllRoots:
+        default: ${get('trust_all_roots', '')}
+        required: false
+        private: true
+    - x_509_hostname_verifier:
+        required: false
+    - x509HostnameVerifier:
+        default: ${get('x_509_hostname_verifier', '')}
+        required: false
+        private: true
+    - trust_keystore:
+        required: false
+    - trustKeystore:
+        default: ${get('trust_keystore', '')}
+        required: false
+        private: true
+    - trust_password:
+        required: false
         sensitive: true
-    - trustPassword: 
-        default: ${get('trust_password', '')}  
-        required: false 
-        private: true 
+    - trustPassword:
+        default: ${get('trust_password', '')}
+        required: false
+        private: true
         sensitive: true
-    - connect_timeout:  
-        required: false  
-    - connectTimeout: 
-        default: ${get('connect_timeout', '')}  
-        required: false 
-        private: true 
-    - socket_timeout:  
-        required: false  
-    - socketTimeout: 
-        default: ${get('socket_timeout', '')}  
-        required: false 
-        private: true 
-    - keep_alive:  
-        required: false  
-    - keepAlive: 
-        default: ${get('keep_alive', '')}  
-        required: false 
-        private: true 
-    - connections_max_per_route:  
-        required: false  
-    - connectionsMaxPerRoute: 
-        default: ${get('connections_max_per_route', '')}  
-        required: false 
-        private: true 
-    - connections_max_total:  
-        required: false  
-    - connectionsMaxTotal: 
-        default: ${get('connections_max_total', '')}  
-        required: false 
-        private: true 
-    - response_character_set:  
-        required: false  
-    - responseCharacterSet: 
-        default: ${get('response_character_set', '')}  
-        required: false 
-        private: true 
-    
-  java_action: 
+    - connect_timeout:
+        required: false
+    - connectTimeout:
+        default: ${get('connect_timeout', '')}
+        required: false
+        private: true
+    - socket_timeout:
+        required: false
+    - socketTimeout:
+        default: ${get('socket_timeout', '')}
+        required: false
+        private: true
+    - keep_alive:
+        required: false
+    - keepAlive:
+        default: ${get('keep_alive', '')}
+        required: false
+        private: true
+    - connections_max_per_route:
+        required: false
+    - connectionsMaxPerRoute:
+        default: ${get('connections_max_per_route', '')}
+        required: false
+        private: true
+    - connections_max_total:
+        required: false
+    - connectionsMaxTotal:
+        default: ${get('connections_max_total', '')}
+        required: false
+        private: true
+    - response_character_set:
+        required: false
+    - responseCharacterSet:
+        default: ${get('response_character_set', '')}
+        required: false
+        private: true
+
+  java_action:
     gav: 'io.cloudslang.content:cs-hashicorp-terraform:1.0.0-RC14'
     class_name: 'io.cloudslang.content.hashicorp.terraform.actions.runs.CancelRun'
     method_name: 'execute'
-  
-  outputs: 
-    - return_result: ${get('returnResult', '')} 
-    - exception: ${get('exception', '')} 
-    - status_code: ${get('statusCode', '')} 
-  
-  results: 
-    - SUCCESS: ${returnCode=='0'} 
+
+  outputs:
+    - return_result: ${get('returnResult', '')}
+    - exception: ${get('exception', '')}
+    - status_code: ${get('statusCode', '')}
+
+  results:
+    - SUCCESS: ${returnCode=='0'}
     - FAILURE

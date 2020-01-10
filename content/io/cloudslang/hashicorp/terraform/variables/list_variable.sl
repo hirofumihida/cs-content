@@ -1,4 +1,4 @@
-#   (c) Copyright 2020 EntIT Software LLC, a Micro Focus company, L.P.
+#   (c) Copyright 2020 Micro Focus, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -13,7 +13,7 @@
 #
 ########################################################################################################################
 #!!
-#! @description: List all available variables in a workspace.
+#! @description: Lists all available variables in a workspace.
 #!
 #! @input auth_token: The authorization token for terraform
 #! @input organization_name: The name of the organization
@@ -32,7 +32,7 @@
 #!                        Optional
 #! @input trust_all_roots: Specifies whether to enable weak security over SSL/TSL. A certificate is trusted even if no
 #!                         trusted certification authority issued it.
-#!                         Default: false
+#!                         Default: 'false'
 #!                         Optional
 #! @input x_509_hostname_verifier: Specifies the way the server hostname must match a domain name in the subject's
 #!                                 Common Name (CN) or subjectAltName field of the X.509 certificate. Set this to
@@ -54,27 +54,27 @@
 #!                        Optional
 #! @input connect_timeout: The time to wait for a connection to be established, in seconds. A timeout value of '0'
 #!                         represents an infinite timeout.
-#!                         Default: 10000
+#!                         Default: '10000'
 #!                         Optional
 #! @input socket_timeout: The timeout for waiting for data (a maximum period inactivity between two consecutive data
 #!                        packets), in seconds. A socketTimeout value of '0' represents an infinite timeout.
 #!                        Optional
 #! @input keep_alive: Specifies whether to create a shared connection that will be used in subsequent calls. If
 #!                    keepAlive is false, the already open connection will be used and after execution it will close it.
-#!                    Default: true
+#!                    Default: 'true'
 #!                    Optional
 #! @input connections_max_per_route: The maximum limit of connections on a per route basis.
-#!                                   Default: 2
+#!                                   Default: '2'
 #!                                   Optional
 #! @input connections_max_total: The maximum limit of connections in total.
-#!                               Default: 20
+#!                               Default: '20'
 #!                               Optional
 #! @input response_character_set: The character encoding to be used for the HTTP response. If responseCharacterSet is
 #!                                empty, the charset from the 'Content-Type' HTTP response header will be used. If
 #!                                responseCharacterSet is empty and the charset from the HTTP response Content-Type
 #!                                header is empty, the default value will be used. You should not use this for
 #!                                method=HEAD or OPTIONS.
-#!                                Default: UTF-8
+#!                                Default: 'UTF-8'
 #!                                Optional
 #!
 #! @output return_result: If successful, returns the complete API response. In case of an error this output will contain
@@ -82,7 +82,7 @@
 #! @output exception: An error message in case there was an error while executing the request.
 #! @output status_code: The HTTP status code for Terraform API request.
 #!
-#! @result SUCCESS: The request was successfully executed.
+#! @result SUCCESS: The request is successfully executed.
 #! @result FAILURE: There was an error while executing the request.
 #!!#
 ########################################################################################################################
