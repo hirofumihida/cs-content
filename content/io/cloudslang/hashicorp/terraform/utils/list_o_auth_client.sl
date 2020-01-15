@@ -182,8 +182,8 @@ operation:
         private: true 
     
   java_action: 
-    gav: 'io.cloudslang.content:cs-hashicorp-terraform:1.0.0-RC17'
-    class_name: 'io.cloudslang.content.hashicorp.terraform.actions.ListOAuthClient'
+    gav: 'io.cloudslang.content:cs-hashicorp-terraform:1.0.0-RC18'
+    class_name: 'io.cloudslang.content.hashicorp.terraform.actions.utils.ListOAuthClient'
     method_name: 'execute'
   
   outputs: 
