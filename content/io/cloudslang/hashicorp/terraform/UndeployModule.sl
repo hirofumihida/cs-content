@@ -165,7 +165,6 @@ flow:
             - workspace_id: '${workspace_id}'
             - variables_json: '[{"propertyName":"CONFIRM_DESTROY","propertyValue":"1","HCL":false,"Category":"env"}]'
             - sensitive_variables_json:
-                value:
                 sensitive: true
             - proxy_host: '${proxy_host}'
             - proxy_port: '${proxy_port}'
