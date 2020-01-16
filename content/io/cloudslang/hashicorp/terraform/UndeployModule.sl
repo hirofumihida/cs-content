@@ -165,6 +165,7 @@ flow:
             - workspace_id: '${workspace_id}'
             - variables_json: '[{"propertyName":"CONFIRM_DESTROY","propertyValue":"1","HCL":false,"Category":"env"}]'
             - sensitive_variables_json:
+                value:
                 sensitive: true
             - proxy_host: '${proxy_host}'
             - proxy_port: '${proxy_port}'
@@ -225,9 +226,9 @@ flow:
           io.cloudslang.base.utils.is_true:
             - bool_value: '${auto_apply}'
         navigate:
-          - 'TRUE': get_run_details_to_delete_workspace
+          - 'TRUE': get_run_details_for_get_state_version_details
           - 'FALSE': get_run_details
-    - wait_for_plan_status:
+    - wait_for_apply_status:
         do:
           io.cloudslang.base.utils.sleep:
             - seconds: '20'
@@ -311,14 +312,7 @@ flow:
             - response_character_set: '${response_character_set}'
         publish: []
         navigate:
-          - SUCCESS: get_run_details_for_auto_apply
-          - FAILURE: on_failure
-    - wait_for_state_version_id:
-        do:
-          io.cloudslang.base.utils.sleep:
-            - seconds: '20'
-        navigate:
-          - SUCCESS: get_run_details_for_auto_apply
+          - SUCCESS: get_run_details_for_get_state_version_details
           - FAILURE: on_failure
     - delete_workspace:
         do:
@@ -399,10 +393,10 @@ flow:
             - increment_by: '1'
             - reset: 'false'
         navigate:
-          - HAS_MORE: wait_for_plan_status
+          - HAS_MORE: wait_for_apply_status
           - NO_MORE: FAILURE
           - FAILURE: on_failure
-    - get_run_details_to_delete_workspace:
+    - get_run_details_for_get_state_version_details:
         do:
           io.cloudslang.hashicorp.terraform.runs.get_run_details:
             - auth_token:
@@ -430,9 +424,9 @@ flow:
         publish:
           - return_result
         navigate:
-          - SUCCESS: get_run_status_value_to_delete_workspace
+          - SUCCESS: get_run_status_value_state_version
           - FAILURE: on_failure
-    - get_run_status_value_to_delete_workspace:
+    - get_run_status_value_state_version:
         do:
           io.cloudslang.base.json.get_value:
             - json_input: '${return_result}'
@@ -440,17 +434,17 @@ flow:
         publish:
           - plan_status: '${return_result}'
         navigate:
-          - SUCCESS: run_status_to_delete_workspace
+          - SUCCESS: run_status_for_get_state_version_details
           - FAILURE: on_failure
-    - run_status_to_delete_workspace:
+    - run_status_for_get_state_version_details:
         do:
           io.cloudslang.base.strings.string_equals:
             - first_string: '${plan_status}'
             - second_string: applied
         navigate:
           - SUCCESS: delete_workspace
-          - FAILURE: counter_to_delete_workspace
-    - counter_to_delete_workspace:
+          - FAILURE: counter_for_get_state_version_details
+    - counter_for_get_state_version_details:
         do:
           io.cloudslang.hashicorp.terraform.utils.counter:
             - from: '1'
@@ -458,8 +452,15 @@ flow:
             - increment_by: '1'
             - reset: 'false'
         navigate:
-          - HAS_MORE: wait_for_state_version_id
+          - HAS_MORE: wait_for_get_state_version_details
           - NO_MORE: FAILURE
+          - FAILURE: on_failure
+    - wait_for_get_state_version_details:
+        do:
+          io.cloudslang.base.utils.sleep:
+            - seconds: '20'
+        navigate:
+          - SUCCESS: get_run_details_for_get_state_version_details
           - FAILURE: on_failure
   results:
     - FAILURE
