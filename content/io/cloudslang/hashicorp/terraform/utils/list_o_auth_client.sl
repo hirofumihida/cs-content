@@ -74,7 +74,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.cloudslang.hashicorp.terraform.actions
+namespace: io.cloudslang.hashicorp.terraform.utils
 
 operation: 
   name: list_o_auth_client
