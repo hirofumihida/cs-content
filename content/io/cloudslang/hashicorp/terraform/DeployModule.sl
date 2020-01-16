@@ -215,7 +215,7 @@ flow:
   workflow:
     - list_o_auth_client:
         do:
-          io.cloudslang.hashicorp.terraform.actions.list_o_auth_client:
+          io.cloudslang.hashicorp.terraform.utils.list_o_auth_client:
             - auth_token:
                 value: '${auth_token}'
                 sensitive: true
