@@ -143,7 +143,7 @@
 ########################################################################################################################
 namespace: io.cloudslang.hashicorp.terraform
 flow:
-  name: Deploy
+  name: DeployModule
   inputs:
     - auth_token:
         sensitive: true
